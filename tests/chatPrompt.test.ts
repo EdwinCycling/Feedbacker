@@ -37,3 +37,13 @@ test('settings round-trip through cookie encoding and reject invalid values', ()
   assert.equal(broken.fullText, true);
   assert.deepEqual(parseChatSettings('%%%'), defaultChatSettings);
 });
+
+test('the chosen AI tool adapts the working method in the prompt', () => {
+  const copilot = buildChatPrompt({ ...defaultChatSettings, tool: 'copilot' }, 'nl');
+  assert.ok(copilot.includes('## Werkwijze (Microsoft Copilot)'));
+  assert.ok(copilot.includes('SharePoint'));
+  const local = buildChatPrompt({ ...defaultChatSettings, tool: 'local' }, 'en');
+  assert.ok(local.includes('without internet access'));
+  assert.equal(parseChatSettings(serializeChatSettings({ ...defaultChatSettings, tool: 'gemini' })).tool, 'gemini');
+  assert.equal(parseChatSettings(encodeURIComponent(JSON.stringify({ tool: 'bard' }))).tool, 'claude');
+});

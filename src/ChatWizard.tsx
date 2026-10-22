@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { ArrowDownToLine, ArrowLeft, ArrowRight, Baby, Bot, Briefcase, Check, Copy, FilePlus2, GraduationCap, HeartHandshake, Languages, LayoutList, Lightbulb, MessageSquarePlus, Microscope, Plus, RotateCcw, Ruler, Search, ShieldCheck, Target, Users, X } from 'lucide-react';
+import { ArrowDownToLine, ArrowLeft, ArrowRight, Baby, Bot, Briefcase, Building2, HardDrive, Sparkle, SquareTerminal, Check, Copy, FilePlus2, GraduationCap, HeartHandshake, Languages, LayoutList, Lightbulb, MessageSquarePlus, Microscope, Plus, RotateCcw, Ruler, Search, ShieldCheck, Target, Users, X } from 'lucide-react';
 import type { Feedback, Source } from './shared';
 import type { Language } from './i18n';
 import { buildAiExport } from './aiExport';
-import { answerLanguages, answerLayouts, answerTypes, buildChatPrompt, chatRoles, chatTools, defaultChatSettings, exampleQuestions, languageNames, levels, parseChatSettings, resolveLanguage, selectedQuestions, serializeChatSettings, type ChatSettings } from './chatPrompt';
+import { answerLanguages, answerLayouts, answerTypes, buildChatPrompt, chatRoles, chatTools, defaultChatSettings, exampleQuestions, languageNames, levels, parseChatSettings, resolveLanguage, selectedQuestions, serializeChatSettings, type ChatSettings, type ChatTool } from './chatPrompt';
+
+const toolIcons: Record<ChatTool, ReactNode> = { claude: <Bot size={18} />, chatgpt: <MessageSquarePlus size={18} />, copilot: <Building2 size={18} />, gemini: <Sparkle size={18} />, local: <HardDrive size={18} />, code: <SquareTerminal size={18} /> };
 import { deleteCookie, readCookie, writeCookie } from './preferences';
 
 const COOKIE = 'feedbacker-chat';
@@ -11,7 +13,7 @@ const COOKIE = 'feedbacker-chat';
 export const aiExportCopy = {
   nl: {
     nav: 'Chat met je feedback',
-    title: 'Praat met je feedback in Claude of ChatGPT.',
+    title: 'Praat met je feedback in je favoriete AI.',
     intro: 'Stel in zeven korte stappen je prompt samen. Je krijgt een kant-en-klare instructie plus een databestand voor je AI-tool, met verwijzingen naar de bron.',
     local: 'Alles wordt in je browser gemaakt. Feedbacker stuurt niets naar een AI-dienst; jij bepaalt waar de prompt en het bestand heen gaan.',
     steps: ['Instructie', 'Vragen', 'Antwoord', 'Niveau', 'Taal', 'Bron', 'Prompt'],
@@ -25,8 +27,9 @@ export const aiExportCopy = {
       ['Je prompt is klaar.', 'Kopieer of bewaar de prompt en zet hem samen met het databestand in je AI-tool.'],
     ],
     toolLabel: 'AI-tool', roleLabel: 'Rol van de AI',
-    tools: { claude: 'Claude', chatgpt: 'ChatGPT', code: 'Codex / Claude Code' },
-    toolHints: { claude: 'claude.ai — met Projects', chatgpt: 'chatgpt.com — gesprek of project', code: 'In een map op je computer' },
+    tools: { claude: 'Claude', chatgpt: 'ChatGPT', copilot: 'Microsoft Copilot', gemini: 'Google Gemini', local: 'Lokaal model', code: 'Codex / Claude Code' },
+    toolHints: { claude: 'claude.ai — met Projects', chatgpt: 'chatgpt.com — gesprek of project', copilot: 'Microsoft 365 Copilot of copilot.microsoft.com', gemini: 'gemini.google.com — met Gems', local: 'Ollama, LM Studio — niets verlaat je pc', code: 'In een map op je computer' },
+    toolExplain: 'Je keuze past de werkwijze in de prompt aan (bijv. geen e-mail of SharePoint bij Copilot, compact bij een lokaal model) en bepaalt de stappen bij G.',
     roles: {
       research: ['Onderzoeksassistent', 'Neutraal, zorgvuldig, met bewijs.'],
       product: ['Productmanager', 'Van feedback naar productkeuzes.'],
@@ -66,13 +69,16 @@ export const aiExportCopy = {
     toolSteps: {
       claude: ['Maak op claude.ai een Project, bijv. "Klantfeedback".', 'Voeg het databestand toe onder Project knowledge.', 'Plak de prompt in Project instructions of als eerste bericht.', 'Stel je vragen in het project.'],
       chatgpt: ['Open ChatGPT en start een gesprek of Project.', 'Upload het databestand via de paperclip.', 'Plak de prompt als eerste bericht.', 'Stel vervolgvragen in hetzelfde gesprek.'],
+      copilot: ['Open Microsoft 365 Copilot (Copilot Chat) met je werkaccount.', 'Voeg het databestand toe via de paperclip of zet het in een Copilot-notitieblok.', 'Plak de prompt als eerste bericht.', 'Controleer het beleid van je organisatie voor klantdata in Copilot.'],
+      gemini: ['Open gemini.google.com of maak een Gem met de prompt als instructie.', 'Upload het databestand via de plus-knop.', 'Plak de prompt als eerste bericht (niet nodig in een Gem).', 'Stel vervolgvragen in hetzelfde gesprek.'],
+      local: ['Start Ollama, LM Studio of Open WebUI met een model met groot contextvenster.', 'Zet bij een groot bestand Volledige sessietekst uit (stap F).', 'Plak het alles-in-één-bestand of upload het als document.', 'Alles blijft op je eigen computer.'],
       code: ['Zet het alles-in-één-bestand in een lege map.', 'Start Codex of Claude Code in die map.', 'Vraag: "Lees het Feedbacker-bestand en volg de instructie."', 'Laat desgewenst een rapport als bestand schrijven.'],
     },
     privacyTitle: 'Let op privacy', privacyText: 'Zodra je de data in een AI-tool zet, verwerkt die aanbieder de inhoud. Controleer het beleid van je organisatie en de voorwaarden van de aanbieder. AI-antwoorden kunnen fouten bevatten: controleer belangrijke conclusies in de bron.',
   },
   en: {
     nav: 'Chat with your feedback',
-    title: 'Talk to your feedback in Claude or ChatGPT.',
+    title: 'Talk to your feedback in your favorite AI.',
     intro: 'Build your prompt in seven short steps. You get a ready-made instruction plus a data file for your AI tool, with references to the source.',
     local: 'Everything is created in your browser. Feedbacker sends nothing to an AI service; you decide where the prompt and file go.',
     steps: ['Instruction', 'Questions', 'Answer', 'Level', 'Language', 'Source', 'Prompt'],
@@ -86,8 +92,9 @@ export const aiExportCopy = {
       ['Your prompt is ready.', 'Copy or save the prompt and add it to your AI tool together with the data file.'],
     ],
     toolLabel: 'AI tool', roleLabel: 'Role of the AI',
-    tools: { claude: 'Claude', chatgpt: 'ChatGPT', code: 'Codex / Claude Code' },
-    toolHints: { claude: 'claude.ai — with Projects', chatgpt: 'chatgpt.com — chat or project', code: 'In a folder on your computer' },
+    tools: { claude: 'Claude', chatgpt: 'ChatGPT', copilot: 'Microsoft Copilot', gemini: 'Google Gemini', local: 'Local model', code: 'Codex / Claude Code' },
+    toolHints: { claude: 'claude.ai — with Projects', chatgpt: 'chatgpt.com — chat or project', copilot: 'Microsoft 365 Copilot or copilot.microsoft.com', gemini: 'gemini.google.com — with Gems', local: 'Ollama, LM Studio — nothing leaves your PC', code: 'In a folder on your computer' },
+    toolExplain: 'Your choice adapts the working method in the prompt (e.g. no email or SharePoint for Copilot, compact for a local model) and sets the steps in G.',
     roles: {
       research: ['Research assistant', 'Neutral, careful, evidence-based.'],
       product: ['Product manager', 'From feedback to product decisions.'],
@@ -127,6 +134,9 @@ export const aiExportCopy = {
     toolSteps: {
       claude: ['Create a Project on claude.ai, e.g. "Customer feedback".', 'Add the data file under Project knowledge.', 'Paste the prompt into Project instructions or as first message.', 'Ask your questions in the project.'],
       chatgpt: ['Open ChatGPT and start a chat or Project.', 'Upload the data file with the paperclip.', 'Paste the prompt as your first message.', 'Ask follow-up questions in the same chat.'],
+      copilot: ['Open Microsoft 365 Copilot (Copilot Chat) with your work account.', 'Attach the data file with the paperclip or add it to a Copilot Notebook.', 'Paste the prompt as your first message.', 'Check your organization\'s policy for customer data in Copilot.'],
+      gemini: ['Open gemini.google.com or create a Gem with the prompt as instructions.', 'Upload the data file with the plus button.', 'Paste the prompt as your first message (not needed in a Gem).', 'Ask follow-up questions in the same chat.'],
+      local: ['Start Ollama, LM Studio or Open WebUI with a large-context model.', 'For a large file, turn off Full session text (step F).', 'Paste the all-in-one file or upload it as a document.', 'Everything stays on your own computer.'],
       code: ['Put the all-in-one file in an empty folder.', 'Start Codex or Claude Code in that folder.', 'Ask: "Read the Feedbacker file and follow its instruction."', 'Optionally have it write a report file.'],
     },
     privacyTitle: 'Mind privacy', privacyText: 'Once you add the data to an AI tool, that provider processes its content. Check your organization\'s policy and the provider\'s terms. AI answers can contain errors: verify important conclusions in the source.',
@@ -215,7 +225,8 @@ export function AiExportPage({ lang, feedback, filtered, sources, onAdd, remembe
   const body = [
     <>
       <div className="wizard-group"><span className="wizard-label">{t.toolLabel}</span>
-        <div className="choice-grid three">{chatTools.map(id => <Choice key={id} name="chat-tool" selected={settings.tool === id} onSelect={() => update('tool', id)} icon={<Bot size={18} />} title={t.tools[id]} hint={t.toolHints[id]} />)}</div>
+        <div className="choice-grid three">{chatTools.map(id => <Choice key={id} name="chat-tool" selected={settings.tool === id} onSelect={() => update('tool', id)} icon={toolIcons[id]} title={t.tools[id]} hint={t.toolHints[id]} />)}</div>
+          <p className="wizard-note"><Lightbulb size={14} />{t.toolExplain}</p>
       </div>
       <div className="wizard-group"><span className="wizard-label">{t.roleLabel}</span>
         <div className="choice-grid two">{chatRoles.map(id => <Choice key={id} name="chat-role" selected={settings.role === id} onSelect={() => update('role', id)} icon={roleIcons[id]} title={t.roles[id][0]} hint={t.roles[id][1]} />)}</div>

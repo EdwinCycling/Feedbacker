@@ -1,4 +1,4 @@
-export const chatTools = ['claude', 'chatgpt', 'code'] as const;
+export const chatTools = ['claude', 'chatgpt', 'copilot', 'gemini', 'local', 'code'] as const;
 export const chatRoles = ['research', 'product', 'success', 'management'] as const;
 export const answerTypes = ['brief', 'short', 'standard', 'detailed'] as const;
 export const answerLayouts = ['bullets', 'prose', 'table'] as const;
@@ -100,6 +100,35 @@ export const languageNames: Record<Exclude<AnswerLanguage, 'auto'>, Record<Lang,
   fr: { nl: 'Frans', en: 'French' }, es: { nl: 'Spaans', en: 'Spanish' },
 };
 
+export const toolNames: Record<ChatTool, string> = {
+  claude: 'Claude', chatgpt: 'ChatGPT', copilot: 'Microsoft Copilot', gemini: 'Google Gemini', local: 'Ollama / LM Studio', code: 'Codex / Claude Code',
+};
+const toolText: Record<ChatTool, Record<Lang, string[]>> = {
+  claude: {
+    nl: ['De export staat in de projectkennis of is bijgevoegd. Lees hem helemaal voordat je antwoordt.', 'Gebruik een artifact voor lange overzichten of tabellen.'],
+    en: ['The export is in the project knowledge or attached. Read it fully before answering.', 'Use an artifact for long overviews or tables.'],
+  },
+  chatgpt: {
+    nl: ['De export is als bestand geüpload. Lees het hele bestand, niet alleen het begin.', 'Zoek niet op internet: alleen de export telt.'],
+    en: ['The export is uploaded as a file. Read the whole file, not just the beginning.', 'Do not browse the web: only the export counts.'],
+  },
+  copilot: {
+    nl: ['Gebruik alleen het bijgevoegde Feedbacker-bestand. Haal geen informatie uit e-mail, chats, SharePoint, OneDrive of internet.', 'Is het bestand te groot om helemaal te lezen? Zeg dat eerlijk en vraag om een kleinere export.'],
+    en: ['Use only the attached Feedbacker file. Do not pull information from email, chats, SharePoint, OneDrive or the web.', 'If the file is too large to read completely, say so and ask for a smaller export.'],
+  },
+  gemini: {
+    nl: ['De export is als bestand geüpload. Lees het hele bestand.', 'Gebruik geen Google Zoeken of andere Google-apps: alleen de export telt.'],
+    en: ['The export is uploaded as a file. Read the whole file.', 'Do not use Google Search or other Google apps: only the export counts.'],
+  },
+  local: {
+    nl: ['Je draait lokaal en hebt geen internet. Alles wat je nodig hebt staat in de export.', 'Je contextvenster is beperkt: houd antwoorden compact en zeg het als je een deel van de export niet kunt zien.'],
+    en: ['You run locally without internet access. Everything you need is in the export.', 'Your context window is limited: keep answers compact and say so if you cannot see part of the export.'],
+  },
+  code: {
+    nl: ['Het Feedbacker-bestand staat in de huidige map. Lees het met je bestandstools.', 'Wijzig het bronbestand niet. Schrijf een uitgebreid antwoord ook naar feedbacker-rapport.md.'],
+    en: ['The Feedbacker file is in the current folder. Read it with your file tools.', 'Do not modify the source file. Also write an extensive answer to feedbacker-report.md.'],
+  },
+};
 export function resolveLanguage(settings: ChatSettings, appLang: Lang) {
   return settings.language === 'auto' ? appLang : settings.language;
 }
@@ -142,6 +171,7 @@ export function buildChatPrompt(settings: ChatSettings, appLang: Lang, custom: s
     `- ${nl ? 'Niveau' : 'Level'}: ${levelText[settings.level][appLang]}`,
     `- ${nl ? 'Taal' : 'Language'}: ${nl ? `Antwoord altijd in het ${answerLanguage}, ook als de bron een andere taal heeft. Citaten mag je in de originele taal laten.` : `Always answer in ${answerLanguage}, even if the source uses another language. Quotes may stay in their original language.`}`,
   ];
+  lines.push('', `## ${nl ? 'Werkwijze' : 'How to work'} (${toolNames[settings.tool]})`, '', ...toolText[settings.tool][appLang].map(line => `- ${line}`));
   if (extra.trim()) lines.push('', `## ${nl ? 'Aanvullende instructie' : 'Additional instruction'}`, '', extra.trim());
   lines.push('', `## ${nl ? 'Vragen' : 'Questions'}`, '');
   if (questions.length) {

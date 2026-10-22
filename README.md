@@ -97,7 +97,8 @@ local or private; check its terms and your organization's policy before use.
 Use **Walkthrough / Rondleiding** in the workspace header, or start from the
 landing page's help section. The optional, restartable walkthrough explains the
 workflow: select feedback, identify patterns, inspect evidence, plan follow-up,
-generate an analysis prompt and export a selection. Balloons and pointers follow
+generate an analysis prompt, chat with your feedback via the A–G wizard, keep
+notes, export a selection and find privacy and the disclaimer. Balloons and pointers follow
 the relevant element, including on mobile. Use Next/Previous, Stop or Escape.
 The walkthrough does not save review changes, and restores the previous workspace
 view while preserving filters.
@@ -135,11 +136,14 @@ The research question and session selection are not restored after a reload.
 ## Chat with your feedback (AI export)
 
 Open **Chat with your feedback / Chat met je feedback** in the workspace navigation
-to talk to your loaded feedback in Claude, ChatGPT, Codex or Claude Code. A
+to talk to your loaded feedback in Claude, ChatGPT, Microsoft Copilot, Google Gemini,
+a local model (Ollama / LM Studio) or Codex / Claude Code. A
 seven-step wizard (A–G) with Back/Next, a clickable step bar and a live summary
 builds the prompt:
 
-- **A Instruction:** AI tool, the AI's role and an optional extra instruction.
+- **A Instruction:** AI tool, the AI's role and an optional extra instruction. The tool
+  adds a tool-specific working method to the prompt (for example: no email or SharePoint
+  for Copilot, compact answers for a local model) and sets the next steps in G.
 - **B Questions:** zero or more example and custom questions. With none, the AI
   confirms it read the export and waits for your questions.
 - **C Answer:** length (one sentence … detailed) and layout (bullets, prose, tables).

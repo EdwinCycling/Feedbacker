@@ -47,6 +47,10 @@ export const helpAiCopy = {
     tourAi: 'Stel een gerichte analyse samen', tourAiText: 'Kies de filterselectie of alle feedback en selecteer sessies. Alleen deze observaties worden context in je prompt. Er wordt niets naar een model gestuurd.',
     tourGoals: 'Laat je vraag de analyse sturen', tourGoalsText: 'Combineer analysekaarten en stel taal, detail en formaat in. De complete prompt verandert mee. Voorkeurcookies bewaren alleen je keuzes, geen klantinhoud.',
     tourPrompt: 'Neem de prompt mee naar je lokale model', tourPromptText: 'Controleer instructies, bron-ID’s en contextgrootte. Kopieer of download de prompt. Jij voert hem uit in je lokale AI-omgeving en controleert daarna de conclusies.',
+    tourChat: 'Praat met je feedback in je eigen AI', tourChatText: 'In zeven stappen (A–G) kies je je AI-tool – Claude, ChatGPT, Copilot, Gemini, een lokaal model of Codex – je vragen, lengte, niveau, taal en bron. Klik op een stap om terug te gaan.',
+    tourChatSummary: 'Je keuzes in één oogopslag', tourChatSummaryText: 'Hier zie je alle keuzes. Klik op een regel om hem te wijzigen. Bij stap G kopieer je de prompt of download je het databestand; je keuzes kun je in een cookie onthouden.',
+    tourNotes: 'Bewaar wat opvalt', tourNotesText: 'Selecteer tekst of klik op Bewaar in notities (rechtsonder) om een stuk naar je notitiepagina te kopiëren. Hier bewerk, bewaar, download of mail je je notities.',
+    tourLegal: 'Privacy en disclaimer', tourLegalText: 'Hier lees je hoe Feedbacker met je data omgaat en wat de disclaimer is. Deze rondleiding start je altijd opnieuw via Rondleiding bovenaan.',
     tourExport: 'Deel een onderbouwde selectie', tourExportText: 'De CSV-export volgt je filters. Deel alleen met bevoegde personen. Daarna kun je opnieuw bronnen toevoegen en beoordelingen blijven bijwerken.',
   },
   en: {
@@ -97,6 +101,10 @@ export const helpAiCopy = {
     tourAi: 'Assemble a focused analysis', tourAiText: 'Use the filtered selection or all feedback and choose sessions. Only those observations become prompt context. Nothing is sent to a model.',
     tourGoals: 'Let your question guide the analysis', tourGoalsText: 'Combine analysis cards and choose language, detail and format. The complete prompt updates live. Preference cookies store choices, not customer content.',
     tourPrompt: 'Take the prompt to your local model', tourPromptText: 'Review the instructions, source IDs and context size. Copy or download the prompt. Run it in your local AI environment and verify its conclusions.',
+    tourChat: 'Talk to your feedback in your own AI', tourChatText: 'In seven steps (A–G) you choose your AI tool – Claude, ChatGPT, Copilot, Gemini, a local model or Codex – your questions, length, level, language and source. Click a step to go back.',
+    tourChatSummary: 'Your choices at a glance', tourChatSummaryText: 'All choices in one place. Click a row to change it. In step G you copy the prompt or download the data file; your choices can be remembered in a cookie.',
+    tourNotes: 'Keep what stands out', tourNotesText: 'Select text or click Save to notes (bottom right) to copy a piece to your notes page. Here you edit, save, download or email your notes.',
+    tourLegal: 'Privacy and disclaimer', tourLegalText: 'Read how Feedbacker handles your data and what the disclaimer says. Restart this walkthrough anytime via Walkthrough at the top.',
     tourExport: 'Share an evidence-based selection', tourExportText: 'CSV export follows your filters. Share only with authorized people. Then keep adding sessions and updating reviews.',
   },
 } as const;
