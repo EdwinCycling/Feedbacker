@@ -117,8 +117,8 @@
   .landing-help .button { margin-left: 46px; }
 }
 @media (max-width: 700px) {
-  .sidebar nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .sidebar .nav-item { min-width: 0; flex-direction: column; gap: 4px; font-size: 9px; text-align: center; padding: 8px 4px; }
+  .sidebar nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .sidebar .nav-item { min-width: 0; flex-direction: column; gap: 4px; font-size: 9px; text-align: center; padding: 8px 2px; hyphens: auto; -webkit-hyphens: auto; line-height: 1.3; }
   .app-header { padding-inline: 17px; gap: 10px; flex-wrap: wrap; }
   .app-header .header-right { gap: 13px; }
   .breadcrumb { font-size: 9px; }
@@ -157,3 +157,32 @@
   .prompt-metrics strong { margin-left: 0; }
   .prompt-actions .button { width: 100%; }
 }
+
+/* Chat with your feedback (AI export) */
+.export-steps { list-style: none; display: grid; gap: 10px; margin: 0; padding: 0; }
+.export-steps li { display: flex; gap: 13px; align-items: flex-start; padding: 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-soft); transition: border-color .18s, transform .18s; }
+.export-steps li:hover { border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); transform: translateY(-1px); }
+.export-steps li > span { flex-shrink: 0; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 600 11px/1 Consolas, monospace; }
+.export-steps strong { display: block; font-size: 12px; font-weight: 600; }
+.export-steps p { font-size: 11px; color: var(--muted); line-height: 1.8; margin-top: 4px; }
+.tool-steps { margin: 4px 0 20px; padding-left: 20px; display: grid; gap: 9px; font-size: 12px; line-height: 1.7; color: var(--secondary); }
+.tool-steps li::marker { color: var(--accent); font-weight: 600; }
+.starter-box { border: 1px dashed color-mix(in srgb, var(--accent) 35%, var(--border)); border-radius: 8px; padding: 15px; background: color-mix(in srgb, var(--accent-soft) 45%, transparent); display: grid; gap: 10px; }
+.starter-box strong { display: block; font-size: 12px; font-weight: 600; }
+.starter-box small { display: block; font-size: 10px; color: var(--muted); margin-top: 3px; }
+.starter-box p { font: 11px/1.85 Consolas, "Courier New", monospace; color: var(--secondary); }
+.starter-box .button { justify-self: start; font-size: 11px; min-height: 34px; }
+.example-questions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.example-questions button { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; text-align: left; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 7px; padding: 12px; font-size: 11px; line-height: 1.7; cursor: pointer; transition: background .18s, border-color .18s, color .18s; }
+.example-questions button svg { flex-shrink: 0; color: var(--muted); margin-top: 3px; }
+.example-questions button:hover { background: var(--surface-soft); border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
+.example-questions button.copied { border-color: color-mix(in srgb, var(--positive) 45%, var(--border)); color: var(--positive); }
+.example-questions button.copied svg { color: var(--positive); }
+.ai-export .builder-checks { margin: 4px 0 20px; }
+.export-metrics { margin-top: 20px; }
+.export-output { height: 300px; }
+.export-filename { margin: 10px 0 0; font-family: Consolas, monospace; }
+.export-empty { display: grid; justify-items: center; text-align: center; gap: 9px; padding: 34px 18px; border: 1px dashed var(--border); border-radius: 10px; color: var(--muted); }
+.export-empty strong { color: var(--text); font-size: 13px; }
+.export-empty p { font-size: 11px; line-height: 1.8; max-width: 300px; margin-bottom: 6px; }
+@media (max-width: 700px) { .example-questions { grid-template-columns: 1fr; } }

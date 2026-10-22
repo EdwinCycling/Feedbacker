@@ -132,6 +132,23 @@ cookies. Custom research questions, selected session IDs and customer content ar
 never stored in those cookies. Without consent, options stay in memory for this visit.
 The research question and session selection are not restored after a reload.
 
+## Chat with your feedback (AI export)
+
+Open **Chat with your feedback / Chat met je feedback** in the workspace navigation
+to talk to your loaded feedback in Claude, ChatGPT, Codex or Claude Code:
+
+1. Download one export file (Markdown, or JSON for tools) containing AI instructions,
+   an overview, every feedback item with `[fb:…]` IDs and evidence, and optionally
+   the full session text and team notes. Known customer names can be replaced.
+2. Add it to a Claude Project, ChatGPT project/chat, or the folder of Codex /
+   Claude Code. The page explains the steps per tool and offers a copyable starter
+   instruction and example questions.
+3. Ask questions; answers cite feedback IDs so they stay traceable.
+
+The file is generated in the browser; Feedbacker never sends it anywhere. Once you
+add it to an AI tool, that provider processes the content: follow your
+organization's policy.
+
 ## Editing and persistence
 
 ### Central notebook
