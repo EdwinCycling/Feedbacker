@@ -135,15 +135,25 @@ The research question and session selection are not restored after a reload.
 ## Chat with your feedback (AI export)
 
 Open **Chat with your feedback / Chat met je feedback** in the workspace navigation
-to talk to your loaded feedback in Claude, ChatGPT, Codex or Claude Code:
+to talk to your loaded feedback in Claude, ChatGPT, Codex or Claude Code. A
+seven-step wizard (A–G) with Back/Next, a clickable step bar and a live summary
+builds the prompt:
 
-1. Download one export file (Markdown, or JSON for tools) containing AI instructions,
-   an overview, every feedback item with `[fb:…]` IDs and evidence, and optionally
-   the full session text and team notes. Known customer names can be replaced.
-2. Add it to a Claude Project, ChatGPT project/chat, or the folder of Codex /
-   Claude Code. The page explains the steps per tool and offers a copyable starter
-   instruction and example questions.
-3. Ask questions; answers cite feedback IDs so they stay traceable.
+- **A Instruction:** AI tool, the AI's role and an optional extra instruction.
+- **B Questions:** zero or more example and custom questions. With none, the AI
+  confirms it read the export and waits for your questions.
+- **C Answer:** length (one sentence … detailed) and layout (bullets, prose, tables).
+- **D Level:** from an 8-year-old to an expert.
+- **E Language:** defaults to the app language; Dutch, English, German, French, Spanish.
+- **F Source:** all or filtered feedback, anonymized customer names, full session
+  text, team notes, Markdown or JSON.
+- **G Prompt:** copy the prompt, download the data file, or download/copy an
+  all-in-one file (prompt + data), plus next steps for the chosen tool.
+
+The data file contains an overview, every feedback item with `[fb:…]` IDs and
+evidence, and optionally full session text and team notes. Choices can be
+remembered in the `feedbacker-chat` cookie (with preference consent); custom
+questions and the extra instruction are never stored.
 
 The file is generated in the browser; Feedbacker never sends it anywhere. Once you
 add it to an AI tool, that provider processes the content: follow your
@@ -207,6 +217,11 @@ title: re-adding the same file keeps edits for unchanged sections.
 - No advertising, third-party tracking or analytics cookies are used.
 - Protect customer personal information and follow your organization's lawful
   processing, access, retention and deletion policies.
-- Feedbacker is independent of and not endorsed by Exact. The visual direction uses
-  restrained red accents and enterprise typography; it does not use Exact's logo,
-  proprietary typefaces or website assets.
+- Feedbacker is an independent project by the NL Vibe Coder Team, provided as is,
+  without warranties. The full **Disclaimer** is available from the landing page
+  footer, the trust section and the workspace sidebar.
+
+## Team
+
+Made with coffee, road bikes and a healthy dose of AI by the **NL Vibe Coder Team**.
+The landing page's Team section introduces the crew (including the coffee machine).

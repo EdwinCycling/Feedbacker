@@ -5,5 +5,6 @@ import './styles.css';
 import './help-ai.css';
 import './notebook.css';
 import './importer.css';
+import './wizard.css';
 
 createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>);

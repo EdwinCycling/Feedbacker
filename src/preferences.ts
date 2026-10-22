@@ -10,4 +10,4 @@ export function deleteCookie(name: string) {
   document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Strict`;
 }
 
-export const preferenceCookies = ['feedbacker-language', 'feedbacker-theme', 'feedbacker-preferences', 'feedbacker-prompt', 'feedbacker-tour'];
+export const preferenceCookies = ['feedbacker-language', 'feedbacker-theme', 'feedbacker-preferences', 'feedbacker-prompt', 'feedbacker-chat', 'feedbacker-tour'];
