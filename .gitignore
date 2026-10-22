@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.log
+.netlify/
+
+# Customer data and local artifacts: never commit
+Sources/
+data/
+Videos/
+*.docx
+*.doc
+*.mp4

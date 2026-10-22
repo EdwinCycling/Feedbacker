@@ -1,0 +1,33 @@
+.notebook-page { padding: 28px; max-width: 1100px; margin: 0 auto; }
+.workspace-content:has(.notebook-page) > .filter-bar, .workspace-content:has(.notebook-page) > .secondary-filters { display: none; }
+.header-right { flex-wrap: wrap; }
+.app-header, .site-header { position: sticky; top: 0; z-index: 20; background: var(--surface); }
+.sidebar { overflow-y: auto; overscroll-behavior: contain; }
+.site-header { z-index: 30; }
+html { scroll-padding-top: calc(var(--header-height, 80px) + 16px); }
+.builder-preview-column { top: calc(var(--header-height, 80px) + 20px); }
+.notebook-clip { position: fixed; right: 22px; bottom: 22px; z-index: 1000; display: flex; align-items: center; gap: 8px; padding: 13px 16px; border-radius: 30px; border: 1px solid var(--border); background: var(--surface); color: var(--accent); box-shadow: 0 5px 22px #0002; font-size: 12px; }
+.notebook-clip:hover { background: var(--accent-soft); }
+.notebook-clip:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.notebook-notice { bottom: 85px; }
+body:has(.modal) .notebook-clip { z-index: 1000; }
+@media(max-width: 700px) {
+  .sidebar { z-index: 30; overflow: visible; }
+  .app-header { top: var(--mobile-nav-height, 65px); padding-block: 10px; }
+  html { scroll-padding-top: calc(var(--mobile-nav-height, 65px) + var(--header-height, 80px) + 16px); }
+  .notebook-clip { right: 14px; bottom: 14px; }
+  .app-header .header-right { gap: 10px; }
+}
+.notebook-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 25px; }
+.notebook-toolbar > span { margin-right: auto; color: var(--muted); font-size: 11px; }
+.notebook-page > label { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; font-size: 12px; color: var(--secondary); }
+.notebook-page input, .notebook-editor { width: 100%; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 7px; padding: 15px; }
+.notebook-page input { font-size: 24px; font-weight: 600; }
+.notebook-editor { min-height: 55vh; resize: vertical; font: 14px/1.9 "Segoe UI", Arial, sans-serif; }
+.notebook-page > p { color: var(--muted); font-size: 11px; line-height: 1.8; }
+.selection-notes { position: fixed; z-index: 10000; display: flex; gap: 2px; padding: 5px; max-width: calc(100vw - 24px); background: var(--surface); border: 1px solid var(--border); box-shadow: 0 8px 30px #0003; border-radius: 9px; }
+.selection-notes button { display: flex; align-items: center; gap: 7px; background: transparent; border: 0; border-radius: 5px; padding: 10px; color: var(--text); font-size: 12px; }
+.selection-notes button:hover { background: var(--accent-soft); color: var(--accent); }
+.notebook-notice { position: fixed; bottom: 22px; right: 22px; max-width: min(460px, calc(100vw - 32px)); z-index: 10001; padding: 17px; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 8px 30px #0003; border-radius: 9px; font-size: 12px; line-height: 1.8; }
+.notebook-notice button { margin-left: 12px; }
+@media(max-width: 700px) { .notebook-page { padding: 17px; } .notebook-toolbar > span { width: 100%; } }

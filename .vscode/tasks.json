@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Feedbacker: install dependencies",
+      "type": "shell",
+      "command": "npm install",
+      "inAgents": true,
+      "runOptions": { "runOn": "worktreeCreated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Feedbacker: start",
+      "type": "shell",
+      "command": "npm run dev",
+      "inAgents": true,
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Feedbacker: build",
+      "type": "shell",
+      "command": "npm run build",
+      "inAgents": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Feedbacker: test",
+      "type": "shell",
+      "command": "npm test",
+      "inAgents": true,
+      "problemMatcher": []
+    }
+  ]
+}
